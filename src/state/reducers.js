@@ -2,10 +2,22 @@ import { combineReducers } from 'redux';
 import { ADD_ITEM } from '../actions/actions';
 import uuid from '../utils/uuid';
 
+// TODO move to a proper file
+// TODO use a Immutablejs Record instead
+class Item {
+  constructor(text) {
+    this.id = uuid();
+    this.text = text;
+  }
+  setText(newText) {
+    return new Item(newText);
+  }
+}
+
 const initialState = {
   items: [
-    {id: uuid(), text:'do this'},
-    {id: uuid(), text:'do that'}
+    new Item('from a class'),
+    new Item('i am a stack item')
   ]
 }
 
@@ -15,7 +27,7 @@ function stack(state = initialState, action) {
       return Object.assign({}, state, {
         items: [
           ...state.items,
-          { id: uuid(), text: action.text }
+          new Item(action.text)
         ]
       })
       default:
