@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-import { ADD_ITEM } from '../actions/actions';
+import {
+  ADD_ITEM,
+  DELETE_ITEM
+} from '../actions/actions';
 import uuid from '../utils/uuid';
+import { findItemById } from '../utils/stack-fns';
 
 // TODO move to a proper file
 // TODO use a Immutablejs Record instead
@@ -8,9 +12,6 @@ class Item {
   constructor(text) {
     this.id = uuid();
     this.text = text;
-  }
-  setText(newText) {
-    return new Item(newText);
   }
 }
 
@@ -30,7 +31,11 @@ function stack(state = initialState, action) {
           new Item(action.text)
         ]
       })
-      default:
+    case DELETE_ITEM:
+      return Object.assign({}, state, {
+        items: state.items.filter(el => el.id !== action.id)
+      });
+    default:
         return state
   }
 }

@@ -7,7 +7,12 @@ const Stack = ({ items }) => {
     <div>
     {
       items.map((item) => {
-          return <StackItem item={item.text} key={item.id}/>;
+          return (
+            <StackItem
+              key={item.id}
+              id={item.id}
+              text={item.text}/>
+          )
       })
     }
     </div>
