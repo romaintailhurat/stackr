@@ -8,14 +8,14 @@ import { createStore, applyMiddleware } from 'redux';
 import appReducers from './state/reducers';
 import { fetchStack } from './actions/actions';
 
+// FIXME find the right way to inject the tools without breaking
+// the middleware configuration
 //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 let store = createStore(
   appReducers,
   applyMiddleware(thunkMiddleware)
 );
-
-//store.dispatch(fetchStack()).then(() => { console.log('remote data fetched!') });
 
 ReactDOM.render(
   <Provider store={store}>
