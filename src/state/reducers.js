@@ -4,7 +4,6 @@ import {
   DELETE_ITEM
 } from '../actions/actions';
 import uuid from '../utils/uuid';
-import { findItemById } from '../utils/stack-fns';
 
 // TODO move to a proper file
 // TODO use a Immutablejs Record instead

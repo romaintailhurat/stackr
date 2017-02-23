@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
 import Stack from './Stack';
 import StackAdder from './StackAdder';
+import { fetchStack } from './actions/actions';
 
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
+
+  componentDidMount() {
+    console.log('app component mounted, fetching data');
+    const { dispatch } = this.props;
+    dispatch(fetchStack()).then(() => { console.log('remote data fetched!') });
+  }
+
   render() {
     return (
       <div className="App">
@@ -16,4 +30,6 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps)(App);
