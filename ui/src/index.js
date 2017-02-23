@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import appReducers from './state/reducers';
-import { fetchStack } from './actions/actions';
 
 // FIXME find the right way to inject the tools without breaking
 // the middleware configuration

@@ -30,7 +30,7 @@ export function fetchStack() {
 
     dispatch(loadRemoteStack());
 
-    return fetch('https://swapi.co/api/people/1')
+    return fetch('http://localhost:9000/stack/items/')
       .then(response => response.json())
       .then(json => dispatch(receiveRemoteStack(json)))
       .catch(error => { console.log(error); });
