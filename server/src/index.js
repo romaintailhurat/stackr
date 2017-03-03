@@ -1,6 +1,6 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -13,26 +13,27 @@ const stack = [
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/stack/items/', (req, res) => {
+app.get("/stack/items/", (req, res) => {
   res.json(stack);
 });
 
-app.post('/stack/item/', (req, res) => {
+app.post("/stack/item/", (req, res) => {
   let item = req.body;
-  console.log('Storing an item', item);
+  console.log("Storing an item", item);
   stack.push(item);
   res.status(200).send(`[OK] Item ${item.id} saved.`);
 });
 
 // Starting app
-app.listen(port, (err) => {
+app.listen(port, err => {
   if (err) {
     console.error(err);
   }
 
-  if (__DEV__) { // webpack flags!
-    console.log('> in development');
+  if (__DEV__) {
+    // webpack flags!
+    console.log("> in development");
   }
 
-  console.log(`> listening on port ${port}`)
+  console.log(`> listening on port ${port}`);
 });
