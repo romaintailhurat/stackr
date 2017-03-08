@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware } from "redux";
 import appReducers from "./state/reducers";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 // FIXME find the right way to inject the tools without breaking
 // the middleware configuration
@@ -15,7 +16,9 @@ let store = createStore(appReducers, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <MuiThemeProvider>
+        <App />
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,27 +1,30 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { deleteItem } from './actions/actions';
+import React from "react";
+import { connect } from "react-redux";
+import { deleteItem } from "./actions/actions";
+import RaisedButton from "material-ui/RaisedButton";
 
 const StackItem = ({ id, text, clickHandler }) => {
-  return(
-    <div>
-       <p> { text }</p>
-       <button onClick={e => {
-           clickHandler(id)
-         }}>
-         DEL
-       </button>
+  return (
+    <div className="box">
+      <p> {text}</p>
+      <RaisedButton
+        label="DEL"
+        primary={true}
+        onClick={e => {
+          clickHandler(id);
+        }}
+      />
     </div>
   );
-}
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    clickHandler: (id) => {
-      console.log('in the clickHandler, id is ', id);
+    clickHandler: id => {
+      console.log("in the clickHandler, id is ", id);
       dispatch(deleteItem(id));
     }
-  }
+  };
 };
 
 export default connect(null, mapDispatchToProps)(StackItem);
