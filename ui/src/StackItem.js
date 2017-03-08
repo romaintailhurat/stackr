@@ -9,7 +9,6 @@ const StackItem = ({ id, text, clickHandler }) => {
       <p> {text}</p>
       <RaisedButton
         label="DEL"
-        primary={true}
         onClick={e => {
           clickHandler(id);
         }}

@@ -4,6 +4,7 @@ import "./App.css";
 import Stack from "./Stack";
 import StackAdder from "./StackAdder";
 import { fetchStack } from "./actions/actions";
+import AppBar from 'material-ui/AppBar';
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>STACKR</h1>
+        <AppBar title="STACKR" />
         <StackAdder />
         <Stack />
       </div>
