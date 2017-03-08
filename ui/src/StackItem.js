@@ -2,18 +2,25 @@ import React from "react";
 import { connect } from "react-redux";
 import { deleteItem } from "./actions/actions";
 import RaisedButton from "material-ui/RaisedButton";
+import { List, ListItem } from "material-ui/List";
+import Delete from "material-ui/svg-icons/action/delete";
 
 const StackItem = ({ id, text, clickHandler }) => {
   return (
-    <div className="box">
-      <p> {text}</p>
-      <RaisedButton
-        label="DEL"
-        onClick={e => {
-          clickHandler(id);
-        }}
+    <List>
+      <ListItem
+        primaryText={text}
+        rightIcon={
+          (
+            <Delete
+              onClick={e => {
+                clickHandler(id);
+              }}
+            />
+          )
+        }
       />
-    </div>
+    </List>
   );
 };
 
