@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { deleteItem } from "./actions/actions";
-import RaisedButton from "material-ui/RaisedButton";
 import { List, ListItem } from "material-ui/List";
 import Delete from "material-ui/svg-icons/action/delete";
 
