@@ -31,7 +31,9 @@ function stack(state = initialState, action) {
       });
     case RECEIVE_REMOTE_STACK:
       return Object.assign({}, state, {
-        items: action.data
+        // FIXME the first item for Firebase data is a null Object
+        // We filter it, but there may be a proper way to handle it
+        items: action.data.filter(item => item !== null)
       });
     default:
       return state;

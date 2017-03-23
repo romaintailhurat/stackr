@@ -10,13 +10,11 @@ const StackItem = ({ id, text, clickHandler }) => {
       <ListItem
         primaryText={text}
         rightIcon={
-          (
-            <Delete
-              onClick={e => {
-                clickHandler(id);
-              }}
-            />
-          )
+          <Delete
+            onClick={e => {
+              clickHandler(id);
+            }}
+          />
         }
       />
     </List>

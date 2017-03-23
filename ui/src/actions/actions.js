@@ -1,4 +1,4 @@
-import fetch from "isomorphic-fetch";
+import Database from "../database";
 
 /* Action types */
 export const ADD_ITEM = "ADD_ITEM";
@@ -27,12 +27,9 @@ export function loadRemoteStack() {
 export function fetchStack() {
   return function(dispatch) {
     dispatch(loadRemoteStack());
-
-    return fetch("http://localhost:9000/stack/items/")
-      .then(response => response.json())
-      .then(json => dispatch(receiveRemoteStack(json)))
-      .catch(error => {
-        console.log(error);
-      });
+    return Database.ref("/stack/").once("value").then(function(snapshot) {
+      console.log("From Firebase:", snapshot.val());
+      dispatch(receiveRemoteStack(snapshot.val()));
+    });
   };
 }
