@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 const Stack = ({ items }) => {
   return (
     <div>
-      {items.map(item => {
-        return <StackItem key={item.id} id={item.id} text={item.text} />;
+      {
+        Object.keys(items).map(key => {
+        return <StackItem key={items[key].id} id={items[key].id} text={items[key].text} />;
       })}
     </div>
   );

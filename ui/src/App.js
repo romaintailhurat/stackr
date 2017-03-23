@@ -7,9 +7,6 @@ import { fetchStack } from "./actions/actions";
 import AppBar from 'material-ui/AppBar';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     console.log("app component mounted, fetching data");

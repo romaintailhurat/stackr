@@ -5,10 +5,11 @@ import {
   RECEIVE_REMOTE_STACK
 } from "../actions/actions";
 import uuid from "../utils/uuid";
+import omit from "lodash.omit";
 
 // TODO move to a proper file
 // TODO use a Immutablejs Record instead
-class Item {
+export class Item {
   constructor(text) {
     this.id = uuid();
     this.text = text;
@@ -16,24 +17,25 @@ class Item {
 }
 
 const initialState = {
-  items: []
+  items: {}
 };
 
 function stack(state = initialState, action) {
   switch (action.type) {
     case ADD_ITEM:
+      let itemToAdd = new Item(action.text);
       return Object.assign({}, state, {
-        items: [...state.items, new Item(action.text)]
+        items: {...state.items, [itemToAdd.id]: itemToAdd}
       });
     case DELETE_ITEM:
       return Object.assign({}, state, {
-        items: state.items.filter(el => el.id !== action.id)
+        items: omit(state.items, action.id)
       });
     case RECEIVE_REMOTE_STACK:
       return Object.assign({}, state, {
         // FIXME the first item for Firebase data is a null Object
         // We filter it, but there may be a proper way to handle it
-        items: action.data.filter(item => item !== null)
+        items: action.data
       });
     default:
       return state;
