@@ -3,6 +3,7 @@ import Database from "../database";
 /* Action types */
 export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
+export const ADD_REMOTE_ITEM = "ADD_REMOTE_ITEM";
 export const LOAD_REMOTE_STACK = "LOAD_REMOTE_STACK";
 export const RECEIVE_REMOTE_STACK = "RECEIVE_REMOTE_STACK";
 
@@ -15,12 +16,16 @@ export function deleteItem(id) {
   return { type: DELETE_ITEM, id: id };
 }
 
+export function loadRemoteStack() {
+  return { type: LOAD_REMOTE_STACK };
+}
+
 export function receiveRemoteStack(data) {
   return { type: RECEIVE_REMOTE_STACK, data: data };
 }
 
-export function loadRemoteStack() {
-  return { type: LOAD_REMOTE_STACK };
+export function addRemoteItem() {
+  return { type: ADD_REMOTE_ITEM };
 }
 
 /* Thunks */
@@ -31,5 +36,14 @@ export function fetchStack() {
       console.log("From Firebase:", snapshot.val());
       dispatch(receiveRemoteStack(snapshot.val()));
     });
+  };
+}
+
+export function saveRemote(item) {
+  console.log("save remote item (id :" + item.id.substring(0, 5));
+  return function(dispatch) {
+    dispatch(addRemoteItem());
+    // TODO firebase API
+    return new Promise();
   };
 }
