@@ -14,10 +14,6 @@ import { Item } from "./state/reducers";
 // Necessary for handling tap events on mobile
 injectTapEventPlugin();
 
-// Test
-//let testItem = new Item("Test item");
-//Database.ref("/stack/" + testItem.id).set(testItem);
-
 let store = createStore(
   appReducers,
   compose(

@@ -1,3 +1,4 @@
+// @flow
 import Database from "../database";
 import { Item } from "../models";
 
@@ -11,11 +12,11 @@ export const LOAD_REMOTE_STACK = "LOAD_REMOTE_STACK";
 export const RECEIVE_REMOTE_STACK = "RECEIVE_REMOTE_STACK";
 
 /* Action creators */
-export function addItem(item) {
+export function addItem(item: Item) {
   return { type: ADD_ITEM, item: item };
 }
 
-export function deleteItem(id) {
+export function deleteItem(id: string) {
   return { type: DELETE_ITEM, id: id };
 }
 
@@ -23,7 +24,7 @@ export function loadRemoteStack() {
   return { type: LOAD_REMOTE_STACK };
 }
 
-export function receiveRemoteStack(data) {
+export function receiveRemoteStack(data: Object) {
   return { type: RECEIVE_REMOTE_STACK, data: data };
 }
 
@@ -39,9 +40,15 @@ export function failAddRemoteItem() {
   return { type: FAIL_ADD_REMOTE_ITEM };
 }
 
+/*
+Typing for the dispatch function
+see http://frantic.im/using-redux-with-flow
+ */
+type Dispatch = (action: Object) => Promise<Object>;
+
 /* Thunks */
 export function fetchStack() {
-  return function(dispatch) {
+  return function(dispatch: Dispatch) {
     dispatch(loadRemoteStack());
     return Database.ref("/stack/").once("value").then(function(snapshot) {
       console.log("From Firebase:", snapshot.val());
@@ -50,10 +57,10 @@ export function fetchStack() {
   };
 }
 
-export function saveRemote(text) {
+export function saveRemote(text: string) {
   const item = new Item(text);
-  console.log("Saving item locally and remotely (id :" + item.id.substring(0, 9));
-  return function(dispatch) {
+  console.log("Saving item locally and remotely (id :" + item.id.substring(0, 9) + ")");
+  return function(dispatch: Dispatch) {
     dispatch(addItem(item));
     dispatch(addRemoteItem());
     Database.ref("/stack/" + item.id)

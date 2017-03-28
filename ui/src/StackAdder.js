@@ -4,6 +4,7 @@ import { saveRemote } from "./actions/actions";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 
+// TODO add flow annotations
 const StackAdder = ({ clickHandler }) => {
   let input;
   return (
