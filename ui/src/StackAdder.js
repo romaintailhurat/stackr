@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addItem } from "./actions/actions";
+import { saveRemote } from "./actions/actions";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 
@@ -31,7 +31,7 @@ const mapDispatchToProps = dispatch => {
       if (!text.trim()) {
         return;
       }
-      dispatch(addItem(text));
+      dispatch(saveRemote(text));
     }
   };
 };

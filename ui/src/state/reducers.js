@@ -4,17 +4,9 @@ import {
   DELETE_ITEM,
   RECEIVE_REMOTE_STACK
 } from "../actions/actions";
-import uuid from "../utils/uuid";
 import omit from "lodash.omit";
+import { Item } from "../models";
 
-// TODO move to a proper file
-// TODO use a Immutablejs Record instead
-export class Item {
-  constructor(text) {
-    this.id = uuid();
-    this.text = text;
-  }
-}
 
 const initialState = {
   items: {}
@@ -23,9 +15,8 @@ const initialState = {
 function stack(state = initialState, action) {
   switch (action.type) {
     case ADD_ITEM:
-      let itemToAdd = new Item(action.text);
       return Object.assign({}, state, {
-        items: {...state.items, [itemToAdd.id]: itemToAdd}
+        items: {...state.items, [action.item.id]: action.item}
       });
     case DELETE_ITEM:
       return Object.assign({}, state, {

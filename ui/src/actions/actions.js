@@ -1,15 +1,18 @@
 import Database from "../database";
+import { Item } from "../models";
 
 /* Action types */
 export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const ADD_REMOTE_ITEM = "ADD_REMOTE_ITEM";
+export const FAIL_ADD_REMOTE_ITEM = "FAIL_ADD_REMOTE_ITEM";
+export const SUCCESS_ADD_REMOTE_ITEM = "SUCCESS_ADD_REMOTE_ITEM";
 export const LOAD_REMOTE_STACK = "LOAD_REMOTE_STACK";
 export const RECEIVE_REMOTE_STACK = "RECEIVE_REMOTE_STACK";
 
 /* Action creators */
-export function addItem(text) {
-  return { type: ADD_ITEM, text: text };
+export function addItem(item) {
+  return { type: ADD_ITEM, item: item };
 }
 
 export function deleteItem(id) {
@@ -28,6 +31,14 @@ export function addRemoteItem() {
   return { type: ADD_REMOTE_ITEM };
 }
 
+export function successAddRemoteItem() {
+  return { type: SUCCESS_ADD_REMOTE_ITEM };
+}
+
+export function failAddRemoteItem() {
+  return { type: FAIL_ADD_REMOTE_ITEM };
+}
+
 /* Thunks */
 export function fetchStack() {
   return function(dispatch) {
@@ -39,11 +50,19 @@ export function fetchStack() {
   };
 }
 
-export function saveRemote(item) {
-  console.log("save remote item (id :" + item.id.substring(0, 5));
+export function saveRemote(text) {
+  const item = new Item(text);
+  console.log("Saving item locally and remotely (id :" + item.id.substring(0, 9));
   return function(dispatch) {
+    dispatch(addItem(item));
     dispatch(addRemoteItem());
-    // TODO firebase API
-    return new Promise();
+    Database.ref("/stack/" + item.id)
+      .set(item)
+      .then(function() {
+        dispatch(successAddRemoteItem());
+      })
+      .catch(function() {
+        dispatch(failAddRemoteItem());
+      });
   };
 }
