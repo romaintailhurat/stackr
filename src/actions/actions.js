@@ -6,6 +6,7 @@ import { Item } from "../models";
 export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const ADD_REMOTE_ITEM = "ADD_REMOTE_ITEM";
+export const DELETE_REMOTE_ITEM = "DELETE_REMOTE_ITEM";
 export const FAIL_ADD_REMOTE_ITEM = "FAIL_ADD_REMOTE_ITEM";
 export const SUCCESS_ADD_REMOTE_ITEM = "SUCCESS_ADD_REMOTE_ITEM";
 export const LOAD_REMOTE_STACK = "LOAD_REMOTE_STACK";
@@ -30,6 +31,10 @@ export function receiveRemoteStack(data: Object) {
 
 export function addRemoteItem() {
   return { type: ADD_REMOTE_ITEM };
+}
+
+export function deleteRemoteItem() {
+  return { type: DELETE_REMOTE_ITEM };
 }
 
 export function successAddRemoteItem() {
@@ -59,7 +64,9 @@ export function fetchStack() {
 
 export function saveRemote(text: string) {
   const item = new Item(text);
-  console.log("Saving item locally and remotely (id :" + item.id.substring(0, 9) + ")");
+  console.log(
+    "Saving item locally and remotely (id :" + item.id.substring(0, 9) + ")"
+  );
   return function(dispatch: Dispatch) {
     dispatch(addItem(item));
     dispatch(addRemoteItem());
@@ -70,6 +77,22 @@ export function saveRemote(text: string) {
       })
       .catch(function() {
         dispatch(failAddRemoteItem());
+      });
+  };
+}
+
+export function deleteRemote(id: string) {
+  console.log("Deleting item with id", id);
+  return function(dispatch: Dispatch) {
+    dispatch(deleteItem(id));
+    dispatch(deleteRemoteItem());
+    Database.ref("/stack/" + id)
+      .remove()
+      .then(function() {
+        /*dispatch*/
+      })
+      .catch(function() {
+        /*dispatch*/
       });
   };
 }
